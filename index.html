@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JobMate Quote Calculator</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f5f7;color:#17181b;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+.app{max-width:560px;margin:auto;padding:22px 16px 50px}
+.header{padding:8px 4px 18px}
+.logo{font-size:32px;font-weight:800}
+.tag{color:#69707a;margin-top:4px}
+.card{background:#fff;border-radius:18px;padding:18px;margin:12px 0;box-shadow:0 3px 16px rgba(0,0,0,.07)}
+h2{margin:0 0 10px}
+label{display:block;font-size:13px;font-weight:700;color:#555b64;margin:14px 0 6px}
+input{display:block;width:100%;height:48px;padding:0 13px;border:1px solid #d6d9de;border-radius:11px;background:#fff;font-size:17px;color:#17181b}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button{width:100%;height:52px;border:0;border-radius:12px;background:#17181b;color:#fff;font-size:17px;font-weight:800;margin-top:18px}
+button:active{transform:scale(.99)}
+button.secondary{background:#eef0f3;color:#17181b}
+.quote-item{border:1px solid #e1e4e8;border-radius:12px;padding:13px;margin:10px 0}
+.quote-item strong{display:block;font-size:16px}
+.quote-meta{font-size:12px;color:#747a83;margin-top:4px}
+.quote-total{font-size:18px;font-weight:800;margin-top:7px}
+.quote-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.quote-actions button{height:40px;margin-top:0;font-size:13px}
+@media print{
+  body{background:#fff}
+  .header,.card:not(#result),#result .note{display:none!important}
+  #result{display:block!important;box-shadow:none;margin:0;padding:0}
+  .app{max-width:none;padding:0}
+}
+
+#result{display:none}
+.result-title{font-size:13px;color:#6d737c;font-weight:700;letter-spacing:.04em}
+.total{font-size:36px;font-weight:850;margin:3px 0 14px}
+.row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid #eceef1}
+.row:last-child{border-bottom:0}
+.profit{font-weight:800}
+.note{font-size:12px;color:#747a83;margin-top:12px;line-height:1.4}
+.error{color:#b42318;font-weight:700;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="logo">JobMate</div>
+    <div class="tag">Quote smarter. Know your profit.</div>
+  </div>
+
+  <div class="card">
+    <h2>New Quote</h2>
+
+    <label for="customer">Customer</label>
+    <input id="customer" type="text" placeholder="e.g. John Smith">
+
+    <label for="job">Job description</label>
+    <input id="job" type="text" placeholder="e.g. Fence replacement">
+
+    <div class="grid">
+      <div>
+        <label for="hours">Labour hours</label>
+        <input id="hours" type="number" inputmode="decimal" value="8" min="0" step="0.25">
+      </div>
+      <div>
+        <label for="rate">Hourly rate ($)</label>
+        <input id="rate" type="number" inputmode="decimal" value="75" min="0" step="0.01">
+      </div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <label for="materials">Materials ($)</label>
+        <input id="materials" type="number" inputmode="decimal" value="350" min="0" step="0.01">
+      </div>
+      <div>
+        <label for="equipment">Equipment ($)</label>
+        <input id="equipment" type="number" inputmode="decimal" value="100" min="0" step="0.01">
+      </div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <label for="travel">Travel / fuel ($)</label>
+        <input id="travel" type="number" inputmode="decimal" value="50" min="0" step="0.01">
+      </div>
+      <div>
+        <label for="other">Other costs ($)</label>
+        <input id="other" type="number" inputmode="decimal" value="0" min="0" step="0.01">
+      </div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <label for="margin">Desired profit margin (%)</label>
+        <input id="margin" type="number" inputmode="decimal" value="20" min="0" max="99.99" step="0.1">
+      </div>
+      <div>
+        <label for="gst">GST (%)</label>
+        <input id="gst" type="number" inputmode="decimal" value="10" min="0" step="0.1">
+      </div>
+    </div>
+
+    <div id="error" class="error"></div>
+    <button id="calculate">CALCULATE QUOTE</button>
+  </div>
+
+
+  <div class="card">
+    <h2>Quote Actions</h2>
+    <div class="grid">
+      <button type="button" id="saveQuote">SAVE QUOTE</button>
+      <button type="button" id="printQuote">PRINT / PDF</button>
+    </div>
+    <div id="saveMessage" class="note"></div>
+  </div>
+
+  <div class="card">
+    <h2>Saved Quotes</h2>
+    <div id="historyEmpty" class="note">No saved quotes yet.</div>
+    <div id="history"></div>
+    <button type="button" id="clearHistory" style="display:none">CLEAR HISTORY</button>
+  </div>
+
+  <div class="card" id="result">
+    <div class="result-title">CUSTOMER QUOTE</div>
+    <h2 id="resultCustomer">Customer</h2>
+    <div id="resultJob" class="tag">Job</div>
+
+    <div style="margin-top:18px">
+      <div class="row"><span>Labour</span><strong id="rLabour">$0.00</strong></div>
+      <div class="row"><span>Materials</span><strong id="rMaterials">$0.00</strong></div>
+      <div class="row"><span>Equipment</span><strong id="rEquipment">$0.00</strong></div>
+      <div class="row"><span>Travel / fuel</span><strong id="rTravel">$0.00</strong></div>
+      <div class="row"><span>Other costs</span><strong id="rOther">$0.00</strong></div>
+      <div class="row"><span>Your total cost</span><strong id="rCost">$0.00</strong></div>
+      <div class="row"><span>Your profit</span><strong class="profit" id="rProfit">$0.00</strong></div>
+      <div class="row"><span>GST</span><strong id="rGst">$0.00</strong></div>
+    </div>
+
+    <div style="margin-top:18px" class="result-title">QUOTE TOTAL INCLUDING GST</div>
+    <div class="total" id="rTotal">$0.00</div>
+    <div class="note">This is a quoting calculator, not accounting or tax advice.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  function value(id){
+    var el=document.getElementById(id);
+    var n=parseFloat(el.value);
+    return Number.isFinite(n) ? n : 0;
+  }
+
+  function money(n){
+    return new Intl.NumberFormat('en-AU',{
+      style:'currency',
+      currency:'AUD',
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    }).format(n);
+  }
+
+  function calculate(){
+    var error=document.getElementById('error');
+    error.textContent='';
+
+    var hours=value('hours');
+    var rate=value('rate');
+    var materials=value('materials');
+    var equipment=value('equipment');
+    var travel=value('travel');
+    var other=value('other');
+    var margin=value('margin');
+    var gstRate=value('gst');
+
+    if(margin>=100){
+      error.textContent='Profit margin must be less than 100%.';
+      return;
+    }
+
+    var labour=hours*rate;
+    var cost=labour+materials+equipment+travel+other;
+
+    // Profit margin means profit as a percentage of the final pre-GST selling price.
+    var preGst = cost / (1 - margin/100);
+    var profit = preGst - cost;
+    var gst = preGst * gstRate/100;
+    var total = preGst + gst;
+
+    document.getElementById('resultCustomer').textContent =
+      document.getElementById('customer').value.trim() || 'Customer';
+
+    document.getElementById('resultJob').textContent =
+      document.getElementById('job').value.trim() || 'Job';
+
+    document.getElementById('rLabour').textContent=money(labour);
+    document.getElementById('rMaterials').textContent=money(materials);
+    document.getElementById('rEquipment').textContent=money(equipment);
+    document.getElementById('rTravel').textContent=money(travel);
+    document.getElementById('rOther').textContent=money(other);
+    document.getElementById('rCost').textContent=money(cost);
+    document.getElementById('rProfit').textContent=money(profit);
+    document.getElementById('rGst').textContent=money(gst);
+    document.getElementById('rTotal').textContent=money(total);
+
+    document.getElementById('result').style.display='block';
+    document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+
+  function getQuoteData(){
+    var customer=document.getElementById('customer').value.trim() || 'Customer';
+    var job=document.getElementById('job').value.trim() || 'Job';
+    var hours=value('hours'), rate=value('rate'), materials=value('materials'),
+        equipment=value('equipment'), travel=value('travel'), other=value('other'),
+        margin=value('margin'), gstRate=value('gst');
+    var labour=hours*rate;
+    var cost=labour+materials+equipment+travel+other;
+    var preGst=cost/(1-margin/100);
+    var profit=preGst-cost;
+    var gst=preGst*gstRate/100;
+    var total=preGst+gst;
+    return {
+      id: Date.now(),
+      date: new Date().toLocaleString('en-AU'),
+      customer, job, hours, rate, materials, equipment, travel, other,
+      margin, gstRate, labour, cost, profit, gst, total
+    };
+  }
+
+  function loadHistory(){
+    var history;
+    try { history=JSON.parse(localStorage.getItem('jobmate_quotes') || '[]'); }
+    catch(e){ history=[]; }
+
+    var box=document.getElementById('history');
+    var empty=document.getElementById('historyEmpty');
+    var clear=document.getElementById('clearHistory');
+    box.innerHTML='';
+
+    if(!history.length){
+      empty.style.display='block';
+      clear.style.display='none';
+      return;
+    }
+
+    empty.style.display='none';
+    clear.style.display='block';
+
+    history.slice().reverse().forEach(function(q){
+      var item=document.createElement('div');
+      item.className='quote-item';
+      item.innerHTML =
+        '<strong>'+escapeHtml(q.customer)+'</strong>'+
+        '<div class="quote-meta">'+escapeHtml(q.job)+' · '+escapeHtml(q.date)+'</div>'+
+        '<div class="quote-total">'+money(q.total)+'</div>'+
+        '<div class="quote-actions">'+
+        '<button type="button" class="secondary load-btn" data-id="'+q.id+'">LOAD</button>'+
+        '<button type="button" class="secondary delete-btn" data-id="'+q.id+'">DELETE</button>'+
+        '</div>';
+      box.appendChild(item);
+    });
+  }
+
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g,function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c];
+    });
+  }
+
+  function saveQuote(){
+    var margin=value('margin');
+    if(margin>=100){
+      document.getElementById('error').textContent='Profit margin must be less than 100%.';
+      return;
+    }
+
+    var q=getQuoteData();
+    var history;
+    try { history=JSON.parse(localStorage.getItem('jobmate_quotes') || '[]'); }
+    catch(e){ history=[]; }
+
+    history.push(q);
+    localStorage.setItem('jobmate_quotes',JSON.stringify(history.slice(-50)));
+    document.getElementById('saveMessage').textContent='Quote saved on this device.';
+    loadHistory();
+  }
+
+  function loadQuote(id){
+    var history=JSON.parse(localStorage.getItem('jobmate_quotes') || '[]');
+    var q=history.find(function(x){return String(x.id)===String(id);});
+    if(!q) return;
+
+    ['customer','job','hours','rate','materials','equipment','travel','other','margin','gst']
+      .forEach(function(k){ document.getElementById(k).value=q[k]; });
+
+    calculate();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function deleteQuote(id){
+    var history=JSON.parse(localStorage.getItem('jobmate_quotes') || '[]');
+    history=history.filter(function(x){return String(x.id)!==String(id);});
+    localStorage.setItem('jobmate_quotes',JSON.stringify(history));
+    loadHistory();
+  }
+
+  document.getElementById('calculate').addEventListener('click',calculate);
+  document.getElementById('saveQuote').addEventListener('click',function(){
+    calculate();
+    saveQuote();
+  });
+  document.getElementById('printQuote').addEventListener('click',function(){
+    calculate();
+    setTimeout(function(){window.print();},100);
+  });
+  document.getElementById('clearHistory').addEventListener('click',function(){
+    if(confirm('Delete all saved quotes from this device?')){
+      localStorage.removeItem('jobmate_quotes');
+      loadHistory();
+    }
+  });
+  document.getElementById('history').addEventListener('click',function(e){
+    var id=e.target.getAttribute('data-id');
+    if(!id) return;
+    if(e.target.classList.contains('load-btn')) loadQuote(id);
+    if(e.target.classList.contains('delete-btn')) deleteQuote(id);
+  });
+
+  loadHistory();
+})();
+</script>
+</body>
+</html>
