@@ -2,540 +2,317 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#17181b">
-<title>JobMate V3 — Quote smarter. Know your profit.</title>
+<title>JobMate V4 — Tradie quoting made simple</title>
 <style>
 *{box-sizing:border-box}
-:root{
-  --bg:#f4f5f7;--card:#fff;--text:#17181b;--muted:#69707a;--line:#e1e4e8;
-  --soft:#eef0f3;--good:#16803c;--warn:#9a6700;--danger:#b42318;
-}
+:root{--bg:#f4f5f7;--card:#fff;--text:#17181b;--muted:#68707a;--line:#e0e3e7;--soft:#eef0f3;--good:#13783c;--danger:#b42318;--blue:#3157d5}
 body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
-.app{max-width:620px;margin:auto;padding:18px 14px 60px}
-.header{padding:8px 4px 14px}
-.logo{font-size:32px;font-weight:850;letter-spacing:-.04em}
-.tag{color:var(--muted);margin-top:4px}
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 14px;position:sticky;top:0;z-index:10;background:var(--bg);padding:4px 0}
-.tab{height:42px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--text);font-weight:800}
-.tab.active{background:var(--text);color:#fff}
-.card{background:var(--card);border-radius:18px;padding:18px;margin:12px 0;box-shadow:0 3px 16px rgba(0,0,0,.07)}
-h2{margin:0 0 10px;font-size:21px}
-h3{margin:0 0 8px;font-size:16px}
-label{display:block;font-size:12px;font-weight:800;color:#555b64;margin:13px 0 6px}
-input,select,textarea{display:block;width:100%;padding:12px 13px;border:1px solid #d6d9de;border-radius:11px;background:#fff;font-size:16px;color:var(--text);font-family:inherit}
-input,select{height:48px}
-textarea{min-height:86px;resize:vertical}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-button{width:100%;min-height:48px;border:0;border-radius:12px;background:var(--text);color:#fff;font-size:15px;font-weight:850;margin-top:12px;padding:10px 12px}
-button:active{transform:scale(.99)}
-button.secondary{background:var(--soft);color:var(--text)}
-button.good{background:#16763b}
-button.danger{background:#fff;color:var(--danger);border:1px solid #efc7c3}
-.small-btn{min-height:40px;font-size:13px;margin-top:8px}
-.row{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid #eceef1}
-.row:last-child{border-bottom:0}
-.row strong{text-align:right}
-.total{font-size:35px;font-weight:900;margin:4px 0 12px;letter-spacing:-.03em}
-.note{font-size:12px;color:var(--muted);line-height:1.45;margin-top:10px}
-.error{color:var(--danger);font-weight:800;margin-top:9px}
-.success{color:var(--good);font-weight:800;margin-top:9px}
-.quote-item{border:1px solid var(--line);border-radius:13px;padding:13px;margin:9px 0}
-.quote-item strong{display:block;font-size:16px}
-.quote-meta{font-size:12px;color:#747a83;margin-top:4px;line-height:1.4}
-.quote-total{font-size:19px;font-weight:900;margin-top:7px}
-.quote-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:9px}
-.quote-actions button{margin:0;min-height:38px;font-size:12px}
-.badge{display:inline-block;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:850;background:var(--soft);margin-top:8px}
-.status-draft{background:#eef0f3}
-.status-sent{background:#e8f0ff}
-.status-accepted{background:#e5f6eb;color:var(--good)}
-.status-declined{background:#fff0ef;color:var(--danger)}
-.status-paid{background:#e5f6eb;color:var(--good)}
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat{background:var(--soft);border-radius:13px;padding:13px}
-.stat-label{font-size:11px;color:var(--muted);font-weight:800}
-.stat-value{font-size:23px;font-weight:900;margin-top:3px}
-.hidden{display:none!important}
-.profile-preview{border:1px dashed #cfd3d8;border-radius:12px;padding:12px;margin-top:10px}
-.print-only{display:none}
-#result{display:none}
-@media(max-width:420px){.grid3{grid-template-columns:1fr 1fr}.grid3 > :last-child{grid-column:1/-1}}
-@media print{
-  body{background:#fff}
-  .no-print,.header,.tabs,.card:not(#printQuoteCard){display:none!important}
-  #printQuoteCard{display:block!important;box-shadow:none;margin:0;padding:0;border-radius:0}
-  .app{max-width:none;padding:0}
-  .print-only{display:block}
-  #result{display:block!important}
-}
+.app{max-width:680px;margin:auto;padding:16px 14px 70px}.header{padding:7px 3px 12px}.logo{font-size:31px;font-weight:900;letter-spacing:-.045em}.tag{color:var(--muted);margin-top:3px}
+nav{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;position:sticky;top:0;z-index:20;background:var(--bg);padding:5px 0 9px}
+nav button{margin:0;min-height:42px;background:#fff;color:var(--text);border:1px solid var(--line);font-size:12px;padding:5px}
+nav button.active{background:var(--text);color:#fff}
+.card{background:#fff;border-radius:18px;padding:18px;margin:11px 0;box-shadow:0 3px 16px rgba(0,0,0,.065)}
+h1,h2,h3{margin:0 0 10px}h2{font-size:21px}h3{font-size:16px}
+label{display:block;font-size:12px;font-weight:850;color:#555d66;margin:12px 0 6px}
+input,textarea,select{width:100%;border:1px solid #d4d8dd;border-radius:11px;background:#fff;padding:12px 13px;font:inherit;font-size:16px;color:var(--text)}
+input,select{height:48px}textarea{min-height:82px;resize:vertical}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{border:0;border-radius:11px;background:var(--text);color:#fff;min-height:47px;padding:9px 12px;font-weight:850;font-size:14px;width:100%;margin-top:11px}
+button.secondary{background:var(--soft);color:var(--text)}button.good{background:var(--good)}button.danger{background:#fff;color:var(--danger);border:1px solid #efc8c4}
+.small{min-height:39px;font-size:12px}.muted{color:var(--muted);font-size:12px;line-height:1.45}.hidden{display:none!important}
+.hero{padding:23px;background:var(--text);color:#fff;border-radius:20px;margin:10px 0}.hero p{color:#d8dbe0;line-height:1.5}
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:var(--soft);border-radius:13px;padding:13px}.stat b{font-size:23px;display:block;margin-top:3px}.stat span{font-size:11px;color:var(--muted);font-weight:800}
+.item{border:1px solid var(--line);border-radius:13px;padding:13px;margin:8px 0}.item strong{display:block}.itemmeta{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45}
+.itemactions{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.itemactions button{margin-top:8px}
+.badge{display:inline-block;border-radius:999px;background:var(--soft);padding:5px 9px;font-size:11px;font-weight:850;margin-top:7px}
+.accepted,.paid{background:#e4f6ea;color:var(--good)}.declined{background:#fff0ef;color:var(--danger)}.sent{background:#eaf0ff;color:var(--blue)}
+.row{display:flex;justify-content:space-between;border-bottom:1px solid #eceef0;padding:9px 0;gap:10px}.row:last-child{border-bottom:0}.row strong{text-align:right}
+.total{font-size:36px;font-weight:950;letter-spacing:-.04em}.profit{color:var(--good)}
+.notice{padding:11px 12px;background:#f0f4ff;border-radius:11px;color:#334b99;font-size:12px;line-height:1.45}
+.onboarding{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;display:flex;align-items:flex-end;justify-content:center}
+.modal{background:#fff;width:min(680px,100%);border-radius:23px 23px 0 0;padding:24px 18px 30px;max-height:92vh;overflow:auto}.modal .logo{margin-bottom:4px}
+.check{display:flex;gap:9px;align-items:center;margin-top:9px;font-size:13px}.check input{width:20px;height:20px}
+.toprow{display:flex;justify-content:space-between;align-items:center;gap:10px}.toprow button{width:auto;margin:0}
+.empty{text-align:center;padding:18px 4px;color:var(--muted);font-size:13px}
+.footer-note{text-align:center;color:#8a9098;font-size:11px;margin-top:18px}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="header no-print">
+<header class="header">
+  <div class="logo">JobMate</div>
+  <div class="tag">Quote smarter. Know your profit.</div>
+</header>
+
+<nav>
+  <button class="nav active" data-view="home">Home</button>
+  <button class="nav" data-view="new">New Quote</button>
+  <button class="nav" data-view="customers">Customers</button>
+  <button class="nav" data-view="business">Business</button>
+</nav>
+
+<main id="home" class="view">
+  <div class="hero">
+    <h2 id="welcomeTitle">Welcome to JobMate</h2>
+    <p id="welcomeText">Create professional quotes, keep track of customers and see what you're actually making.</p>
+    <button id="heroNew" class="good">CREATE A QUOTE</button>
+  </div>
+  <div class="card">
+    <h2>Business snapshot</h2>
+    <div class="statgrid">
+      <div class="stat"><span>QUOTES</span><b id="sQuotes">0</b></div>
+      <div class="stat"><span>QUOTED</span><b id="sQuoted">$0</b></div>
+      <div class="stat"><span>ACCEPTED / PAID</span><b id="sWon">$0</b></div>
+      <div class="stat"><span>EST. PROFIT</span><b id="sProfit">$0</b></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="toprow"><h2>Recent quotes</h2><button class="secondary small" id="viewAllQuotes">VIEW ALL</button></div>
+    <div id="recentQuotes"></div>
+  </div>
+</main>
+
+<section id="new" class="view hidden">
+  <div class="card">
+    <h2 id="quoteHeading">New Quote</h2>
+    <div class="grid">
+      <div><label>Quote number</label><input id="quoteNumber"></div>
+      <div><label>Date</label><input id="quoteDate" type="date"></div>
+    </div>
+    <label>Customer</label><select id="customerSelect"><option value="">New customer / choose later</option></select>
+    <div class="grid">
+      <div><label>Customer phone</label><input id="phone" type="tel"></div>
+      <div><label>Customer email</label><input id="email" type="email"></div>
+    </div>
+    <label>Customer name</label><input id="customer" placeholder="e.g. John Smith">
+    <label>Job address</label><input id="address" placeholder="Optional">
+    <label>Job description</label><textarea id="job" placeholder="e.g. Replace 30m boundary fence"></textarea>
+
+    <div class="grid">
+      <div><label>Labour hours</label><input id="hours" type="number" inputmode="decimal" value="8" min="0" step=".25"></div>
+      <div><label>Hourly rate ($)</label><input id="rate" type="number" inputmode="decimal" value="75" min="0" step=".01"></div>
+      <div><label>Materials ($)</label><input id="materials" type="number" inputmode="decimal" value="350" min="0" step=".01"></div>
+      <div><label>Equipment ($)</label><input id="equipment" type="number" inputmode="decimal" value="100" min="0" step=".01"></div>
+      <div><label>Travel / fuel ($)</label><input id="travel" type="number" inputmode="decimal" value="50" min="0" step=".01"></div>
+      <div><label>Other costs ($)</label><input id="other" type="number" inputmode="decimal" value="0" min="0" step=".01"></div>
+      <div><label>Profit margin (%)</label><input id="margin" type="number" inputmode="decimal" value="20" min="0" max="99.99" step=".1"></div>
+      <div><label>GST (%)</label><input id="gst" type="number" inputmode="decimal" value="10" min="0" step=".1"></div>
+    </div>
+    <label>Terms / notes</label><textarea id="terms" placeholder="e.g. 50% deposit required. Quote valid for 14 days."></textarea>
+    <div id="quoteError" class="muted"></div>
+    <div class="grid">
+      <button id="calculate">CALCULATE</button>
+      <button id="saveQuote" class="good">SAVE QUOTE</button>
+    </div>
+    <button id="printQuote" class="secondary">PRINT / SAVE PDF</button>
+    <button id="newBlank" class="secondary">CLEAR / NEW QUOTE</button>
+  </div>
+
+  <div class="card" id="quoteResult">
+    <div class="muted">QUOTE TOTAL</div>
+    <div class="total" id="rTotal">$0.00</div>
+    <div class="row"><span>Total job cost</span><strong id="rCost">$0.00</strong></div>
+    <div class="row"><span>Estimated profit</span><strong class="profit" id="rProfit">$0.00</strong></div>
+    <div class="row"><span>GST</span><strong id="rGst">$0.00</strong></div>
+  </div>
+</section>
+
+<section id="customers" class="view hidden">
+  <div class="card">
+    <div class="toprow"><h2>Customers</h2><button id="addCustomerBtn" class="small">ADD CUSTOMER</button></div>
+    <div id="customerList"></div>
+  </div>
+  <div class="card hidden" id="customerFormCard">
+    <h2 id="customerFormTitle">Add customer</h2>
+    <input id="editCustomerId" type="hidden">
+    <label>Name</label><input id="cName" placeholder="Customer name">
+    <label>Phone</label><input id="cPhone" type="tel">
+    <label>Email</label><input id="cEmail" type="email">
+    <label>Address</label><input id="cAddress">
+    <div class="grid"><button id="saveCustomer" class="good">SAVE</button><button id="cancelCustomer" class="secondary">CANCEL</button></div>
+  </div>
+</section>
+
+<section id="business" class="view hidden">
+  <div class="card">
+    <h2>Business profile</h2>
+    <p class="muted">These details appear on your printable quotes.</p>
+    <label>Business name</label><input id="bName" placeholder="e.g. Smith Contracting">
+    <div class="grid">
+      <div><label>ABN</label><input id="bAbn"></div>
+      <div><label>Phone</label><input id="bPhone" type="tel"></div>
+    </div>
+    <label>Email</label><input id="bEmail" type="email">
+    <label>Business address</label><input id="bAddress">
+    <label>Default quote terms</label><textarea id="bTerms"></textarea>
+    <button id="saveBusiness" class="good">SAVE BUSINESS PROFILE</button>
+    <div id="businessMsg" class="muted"></div>
+  </div>
+  <div class="card">
+    <h2>JobMate account</h2>
+    <div class="notice"><strong>Local mode is active.</strong><br>Your data is currently stored securely in this browser/device. The next production step is connecting a real account and cloud database so your data follows you between devices.</div>
+    <button id="upgradeBtn">JOBMATE PRO — COMING NEXT</button>
+  </div>
+</section>
+
+<div class="footer-note">JobMate V4 · Local beta</div>
+</div>
+
+<div id="onboarding" class="onboarding hidden">
+  <div class="modal">
     <div class="logo">JobMate</div>
-    <div class="tag">Quote smarter. Know your profit.</div>
+    <div class="tag">Set up your business in about 60 seconds.</div>
+    <label>Business name</label><input id="oName" placeholder="e.g. Smith Contracting">
+    <div class="grid">
+      <div><label>ABN</label><input id="oAbn"></div>
+      <div><label>Phone</label><input id="oPhone" type="tel"></div>
+    </div>
+    <label>Email</label><input id="oEmail" type="email">
+    <label>Business address</label><input id="oAddress">
+    <label>Default quote terms</label><textarea id="oTerms" placeholder="Optional"></textarea>
+    <label class="check"><input id="oDone" type="checkbox"> I understand JobMate currently stores data on this device.</label>
+    <button id="finishOnboarding" class="good">GET STARTED</button>
   </div>
-
-  <div class="tabs no-print">
-    <button class="tab active" data-tab="quoteTab">New Quote</button>
-    <button class="tab" data-tab="quotesTab">Quotes</button>
-    <button class="tab" data-tab="businessTab">Business</button>
-  </div>
-
-  <section id="quoteTab">
-    <div class="card no-print">
-      <h2>New Quote</h2>
-      <div class="grid">
-        <div>
-          <label for="quoteNumber">Quote number</label>
-          <input id="quoteNumber" type="text">
-        </div>
-        <div>
-          <label for="quoteDate">Quote date</label>
-          <input id="quoteDate" type="date">
-        </div>
-      </div>
-
-      <label for="customer">Customer name</label>
-      <input id="customer" type="text" placeholder="e.g. John Smith">
-
-      <div class="grid">
-        <div>
-          <label for="phone">Customer phone</label>
-          <input id="phone" type="tel" placeholder="Optional">
-        </div>
-        <div>
-          <label for="email">Customer email</label>
-          <input id="email" type="email" placeholder="Optional">
-        </div>
-      </div>
-
-      <label for="address">Job address</label>
-      <input id="address" type="text" placeholder="Optional">
-
-      <label for="job">Job description</label>
-      <textarea id="job" placeholder="e.g. Fence replacement"></textarea>
-
-      <div class="grid">
-        <div>
-          <label for="hours">Labour hours</label>
-          <input id="hours" type="number" inputmode="decimal" value="8" min="0" step="0.25">
-        </div>
-        <div>
-          <label for="rate">Hourly rate ($)</label>
-          <input id="rate" type="number" inputmode="decimal" value="75" min="0" step="0.01">
-        </div>
-      </div>
-
-      <div class="grid">
-        <div>
-          <label for="materials">Materials ($)</label>
-          <input id="materials" type="number" inputmode="decimal" value="350" min="0" step="0.01">
-        </div>
-        <div>
-          <label for="equipment">Equipment ($)</label>
-          <input id="equipment" type="number" inputmode="decimal" value="100" min="0" step="0.01">
-        </div>
-      </div>
-
-      <div class="grid">
-        <div>
-          <label for="travel">Travel / fuel ($)</label>
-          <input id="travel" type="number" inputmode="decimal" value="50" min="0" step="0.01">
-        </div>
-        <div>
-          <label for="other">Other costs ($)</label>
-          <input id="other" type="number" inputmode="decimal" value="0" min="0" step="0.01">
-        </div>
-      </div>
-
-      <div class="grid">
-        <div>
-          <label for="margin">Desired profit margin (%)</label>
-          <input id="margin" type="number" inputmode="decimal" value="20" min="0" max="99.99" step="0.1">
-        </div>
-        <div>
-          <label for="gst">GST (%)</label>
-          <input id="gst" type="number" inputmode="decimal" value="10" min="0" step="0.1">
-        </div>
-      </div>
-
-      <label for="terms">Quote terms / notes</label>
-      <textarea id="terms" placeholder="e.g. 50% deposit required. Quote valid for 14 days."></textarea>
-
-      <div id="error" class="error"></div>
-      <button id="calculate">CALCULATE QUOTE</button>
-    </div>
-
-    <div class="card no-print" id="actionCard">
-      <h2>Quote Actions</h2>
-      <div class="grid">
-        <button type="button" id="saveQuote">SAVE QUOTE</button>
-        <button type="button" id="printQuote" class="secondary">PRINT / PDF</button>
-      </div>
-      <div class="grid">
-        <button type="button" id="newQuote" class="secondary">NEW QUOTE</button>
-        <button type="button" id="copySummary" class="secondary">COPY SUMMARY</button>
-      </div>
-      <div id="saveMessage" class="note"></div>
-    </div>
-
-    <div class="card" id="printQuoteCard">
-      <div id="result">
-        <div class="print-only" style="border-bottom:2px solid #17181b;padding-bottom:14px;margin-bottom:18px">
-          <h1 id="pBusinessName" style="margin:0 0 4px;font-size:28px">Your Business</h1>
-          <div id="pBusinessDetails" style="font-size:12px;line-height:1.5;color:#555"></div>
-          <div style="margin-top:16px;font-size:12px;font-weight:800">QUOTE</div>
-          <div style="font-size:12px">Quote #<span id="pQuoteNumber"></span> · <span id="pQuoteDate"></span></div>
-        </div>
-
-        <div class="result-title">CUSTOMER QUOTE</div>
-        <h2 id="resultCustomer">Customer</h2>
-        <div id="resultContact" class="tag"></div>
-        <div id="resultAddress" class="tag"></div>
-        <div id="resultJob" class="tag">Job</div>
-
-        <div style="margin-top:18px">
-          <div class="row"><span>Labour</span><strong id="rLabour">$0.00</strong></div>
-          <div class="row"><span>Materials</span><strong id="rMaterials">$0.00</strong></div>
-          <div class="row"><span>Equipment</span><strong id="rEquipment">$0.00</strong></div>
-          <div class="row"><span>Travel / fuel</span><strong id="rTravel">$0.00</strong></div>
-          <div class="row"><span>Other costs</span><strong id="rOther">$0.00</strong></div>
-          <div class="row"><span>Your total cost</span><strong id="rCost">$0.00</strong></div>
-          <div class="row"><span>Your profit</span><strong class="profit" id="rProfit">$0.00</strong></div>
-          <div class="row"><span>GST</span><strong id="rGst">$0.00</strong></div>
-        </div>
-
-        <div style="margin-top:18px" class="result-title">QUOTE TOTAL INCLUDING GST</div>
-        <div class="total" id="rTotal">$0.00</div>
-
-        <div class="print-only" style="margin-top:18px">
-          <div style="font-weight:800;font-size:13px">Terms / notes</div>
-          <div id="pTerms" style="font-size:12px;white-space:pre-wrap;line-height:1.5;margin-top:5px"></div>
-          <div style="margin-top:24px;font-size:11px;color:#666">This quote was prepared using JobMate. Pricing and tax treatment should be checked against your own business/accounting requirements.</div>
-        </div>
-
-        <div class="note no-print">This is a quoting calculator, not accounting or tax advice.</div>
-      </div>
-    </div>
-  </section>
-
-  <section id="quotesTab" class="hidden">
-    <div class="card no-print">
-      <h2>Quote Dashboard</h2>
-      <div class="stat-grid">
-        <div class="stat"><div class="stat-label">QUOTES</div><div class="stat-value" id="statQuotes">0</div></div>
-        <div class="stat"><div class="stat-label">TOTAL QUOTED</div><div class="stat-value" id="statQuoted">$0</div></div>
-        <div class="stat"><div class="stat-label">ACCEPTED / PAID</div><div class="stat-value" id="statWon">$0</div></div>
-        <div class="stat"><div class="stat-label">EST. PROFIT</div><div class="stat-value" id="statProfit">$0</div></div>
-      </div>
-    </div>
-
-    <div class="card no-print">
-      <h2>Saved Quotes</h2>
-      <div id="historyEmpty" class="note">No saved quotes yet.</div>
-      <div id="history"></div>
-      <button type="button" id="clearHistory" class="danger" style="display:none">CLEAR ALL QUOTES</button>
-    </div>
-  </section>
-
-  <section id="businessTab" class="hidden">
-    <div class="card no-print">
-      <h2>Business Profile</h2>
-      <p class="note">Save your details once and JobMate will place them on professional printable quotes.</p>
-
-      <label for="businessName">Business name</label>
-      <input id="businessName" type="text" placeholder="e.g. Smith Contracting">
-
-      <div class="grid">
-        <div>
-          <label for="abn">ABN</label>
-          <input id="abn" type="text" placeholder="Optional">
-        </div>
-        <div>
-          <label for="businessPhone">Phone</label>
-          <input id="businessPhone" type="tel" placeholder="Optional">
-        </div>
-      </div>
-
-      <label for="businessEmail">Email</label>
-      <input id="businessEmail" type="email" placeholder="Optional">
-
-      <label for="businessAddress">Business address</label>
-      <input id="businessAddress" type="text" placeholder="Optional">
-
-      <label for="defaultTerms">Default quote terms</label>
-      <textarea id="defaultTerms" placeholder="These terms will be used for new quotes."></textarea>
-
-      <button id="saveBusiness">SAVE BUSINESS PROFILE</button>
-      <div id="businessMessage" class="note"></div>
-
-      <div class="profile-preview">
-        <strong>Quote header preview</strong>
-        <div id="profilePreview" class="note">Your business details will appear here.</div>
-      </div>
-    </div>
-  </section>
 </div>
 
 <script>
-(function(){
-  const KEY_QUOTES='jobmate_quotes_v3';
-  const KEY_BUSINESS='jobmate_business_v3';
+(() => {
+const Q='jobmate_v4_quotes', C='jobmate_v4_customers', B='jobmate_v4_business', O='jobmate_v4_onboarded';
+const $=id=>document.getElementById(id);
+const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(d))}catch(e){return d}};
+const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const money=n=>new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD'}).format(Number(n)||0);
+const today=()=>new Date().toISOString().slice(0,10);
+const val=id=>{let n=parseFloat($(id).value);return Number.isFinite(n)?n:0};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const statusClass=s=>String(s||'Draft').toLowerCase();
 
-  const $=id=>document.getElementById(id);
-  const value=id=>{
-    const n=parseFloat($(id).value);
-    return Number.isFinite(n)?n:0;
-  };
-  const money=n=>new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD',minimumFractionDigits:2,maximumFractionDigits:2}).format(n);
-  const today=()=>new Date().toISOString().slice(0,10);
-  const escapeHtml=str=>String(str??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-  const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key)||JSON.stringify(fallback))}catch(e){return fallback}};
-  const write=(key,val)=>localStorage.setItem(key,JSON.stringify(val));
+function nextNo(){
+ const y=new Date().getFullYear(), qs=read(Q,[]), nums=qs.map(x=>String(x.number||'').match(new RegExp('^JM-'+y+'-(\\\\d+)$'))).filter(Boolean).map(x=>+x[1]);
+ return 'JM-'+y+'-'+String((nums.length?Math.max(...nums):0)+1).padStart(4,'0');
+}
+function business(){return read(B,{})}
+function show(view){
+ document.querySelectorAll('.view').forEach(x=>x.classList.toggle('hidden',x.id!==view));
+ document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.view===view));
+ if(view==='home')renderHome(); if(view==='customers')renderCustomers();
+}
+document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>show(b.dataset.view));
+$('heroNew').onclick=()=>{blankQuote();show('new')};
+$('viewAllQuotes').onclick=()=>{show('home');renderHome();window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})};
 
-  function nextQuoteNumber(){
-    const year=new Date().getFullYear();
-    const quotes=read(KEY_QUOTES,[]);
-    const nums=quotes.map(q=>String(q.quoteNumber||'').match(new RegExp('^JM-'+year+'-(\\\\d+)$'))).filter(Boolean).map(m=>parseInt(m[1],10));
-    const next=(nums.length?Math.max.apply(null,nums):0)+1;
-    return 'JM-'+year+'-'+String(next).padStart(4,'0');
-  }
+function calc(){
+ const margin=val('margin');
+ if(margin>=100){$('quoteError').textContent='Profit margin must be below 100%.';return null}
+ $('quoteError').textContent='';
+ const labour=val('hours')*val('rate'), cost=labour+val('materials')+val('equipment')+val('travel')+val('other');
+ const pre=cost/(1-margin/100), profit=pre-cost, gst=pre*val('gst')/100, total=pre+gst;
+ $('rCost').textContent=money(cost);$('rProfit').textContent=money(profit);$('rGst').textContent=money(gst);$('rTotal').textContent=money(total);
+ return {id:Date.now(),number:$('quoteNumber').value,date:$('quoteDate').value,customer:$('customer').value.trim()||'Customer',
+ phone:$('phone').value.trim(),email:$('email').value.trim(),address:$('address').value.trim(),job:$('job').value.trim()||'Job',
+ hours:val('hours'),rate:val('rate'),materials:val('materials'),equipment:val('equipment'),travel:val('travel'),other:val('other'),
+ margin,gstRate:val('gst'),cost,profit,gst,total,terms:$('terms').value.trim(),status:'Draft'};
+}
+function saveQuote(){
+ const q=calc();if(!q)return;
+ let qs=read(Q,[]),i=qs.findIndex(x=>x.number===q.number);
+ if(i>=0){q.id=qs[i].id;q.status=qs[i].status||'Draft';qs[i]=q}else qs.push(q);
+ write(Q,qs);renderHome();alert('Quote saved.');
+}
+function blankQuote(){
+ $('quoteNumber').value=nextNo();$('quoteDate').value=today();$('customerSelect').value='';
+ ['customer','phone','email','address','job'].forEach(x=>$(x).value='');
+ $('hours').value=8;$('rate').value=75;$('materials').value=350;$('equipment').value=100;$('travel').value=50;$('other').value=0;$('margin').value=20;$('gst').value=10;
+ $('terms').value=business().terms||'';$('quoteError').textContent='';
+ $('rTotal').textContent='$0.00';$('rCost').textContent='$0.00';$('rProfit').textContent='$0.00';$('rGst').textContent='$0.00';
+}
+function loadQuote(q){
+ show('new');$('quoteNumber').value=q.number;$('quoteDate').value=q.date;$('customer').value=q.customer;$('phone').value=q.phone||'';$('email').value=q.email||'';
+ $('address').value=q.address||'';$('job').value=q.job||'';$('hours').value=q.hours;$('rate').value=q.rate;$('materials').value=q.materials;$('equipment').value=q.equipment;
+ $('travel').value=q.travel;$('other').value=q.other;$('margin').value=q.margin;$('gst').value=q.gstRate;$('terms').value=q.terms||'';calc();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderHome(){
+ const qs=read(Q,[]), quoted=qs.reduce((a,q)=>a+q.total,0), won=qs.filter(q=>q.status==='Accepted'||q.status==='Paid').reduce((a,q)=>a+q.total,0), profit=qs.filter(q=>q.status==='Accepted'||q.status==='Paid').reduce((a,q)=>a+q.profit,0);
+ $('sQuotes').textContent=qs.length;$('sQuoted').textContent=money(quoted);$('sWon').textContent=money(won);$('sProfit').textContent=money(profit);
+ const b=business();$('welcomeTitle').textContent=b.name?'Good to see you, '+b.name:'Welcome to JobMate';
+ const box=$('recentQuotes');box.innerHTML='';
+ if(!qs.length){box.innerHTML='<div class="empty">No quotes yet. Create your first quote above.</div>';return}
+ qs.slice(-5).reverse().forEach(q=>{
+  const d=document.createElement('div');d.className='item';
+  d.innerHTML='<strong>'+esc(q.customer)+'</strong><div class="itemmeta">'+esc(q.number)+' · '+esc(q.job)+' · '+esc(q.date)+'</div><span class="badge '+statusClass(q.status)+'">'+esc(q.status)+'</span><div class="itemmeta">Total '+money(q.total)+' · Profit '+money(q.profit)+'</div><div class="itemactions"><button class="secondary load" data-id="'+q.id+'">OPEN</button><button class="secondary status" data-id="'+q.id+'">CHANGE STATUS</button></div>';
+  box.appendChild(d);
+ });
+}
+$('recentQuotes').onclick=e=>{
+ const id=e.target.dataset.id;if(!id)return;const qs=read(Q,[]),q=qs.find(x=>String(x.id)===id);if(!q)return;
+ if(e.target.classList.contains('load'))loadQuote(q);
+ if(e.target.classList.contains('status')){const s=['Draft','Sent','Accepted','Declined','Paid'],i=s.indexOf(q.status||'Draft');q.status=s[(i+1)%s.length];write(Q,qs);renderHome()}
+};
 
-  function loadBusiness(){
-    const b=read(KEY_BUSINESS,{});
-    $('businessName').value=b.name||'';
-    $('abn').value=b.abn||'';
-    $('businessPhone').value=b.phone||'';
-    $('businessEmail').value=b.email||'';
-    $('businessAddress').value=b.address||'';
-    $('defaultTerms').value=b.terms||'';
-    updateProfilePreview();
-  }
-
-  function updateProfilePreview(){
-    const b={
-      name:$('businessName').value.trim(),
-      abn:$('abn').value.trim(),
-      phone:$('businessPhone').value.trim(),
-      email:$('businessEmail').value.trim(),
-      address:$('businessAddress').value.trim()
-    };
-    const lines=[b.name||'Your Business'];
-    if(b.abn) lines.push('ABN '+b.abn);
-    if(b.phone) lines.push(b.phone);
-    if(b.email) lines.push(b.email);
-    if(b.address) lines.push(b.address);
-    $('profilePreview').textContent=lines.join(' · ');
-  }
-
-  function saveBusiness(){
-    const b={
-      name:$('businessName').value.trim(),
-      abn:$('abn').value.trim(),
-      phone:$('businessPhone').value.trim(),
-      email:$('businessEmail').value.trim(),
-      address:$('businessAddress').value.trim(),
-      terms:$('defaultTerms').value.trim()
-    };
-    write(KEY_BUSINESS,b);
-    $('businessMessage').textContent='Business profile saved on this device.';
-    if(!$('terms').value.trim() && b.terms) $('terms').value=b.terms;
-    updatePrintHeader();
-  }
-
-  function getQuoteData(){
-    const hours=value('hours'),rate=value('rate'),materials=value('materials'),equipment=value('equipment'),
-      travel=value('travel'),other=value('other'),margin=value('margin'),gstRate=value('gst');
-    const labour=hours*rate;
-    const cost=labour+materials+equipment+travel+other;
-    const preGst=cost/(1-margin/100);
-    const profit=preGst-cost;
-    const gst=preGst*gstRate/100;
-    const total=preGst+gst;
-    return {
-      id:Date.now(),quoteNumber:$('quoteNumber').value.trim()||nextQuoteNumber(),
-      date:$('quoteDate').value||today(),
-      customer:$('customer').value.trim()||'Customer',
-      phone:$('phone').value.trim(),email:$('email').value.trim(),address:$('address').value.trim(),
-      job:$('job').value.trim()||'Job',terms:$('terms').value.trim(),
-      hours,rate,materials,equipment,travel,other,margin,gstRate,labour,cost,profit,gst,total,status:'Draft'
-    };
-  }
-
-  function validate(){
-    const margin=value('margin');
-    $('error').textContent='';
-    if(margin>=100){$('error').textContent='Profit margin must be less than 100%.';return false}
-    if(margin<0){$('error').textContent='Profit margin cannot be negative.';return false}
-    return true;
-  }
-
-  function calculate(){
-    if(!validate()) return null;
-    const q=getQuoteData();
-    $('quoteNumber').value=q.quoteNumber;
-    $('resultCustomer').textContent=q.customer;
-    $('resultContact').textContent=[q.phone,q.email].filter(Boolean).join(' · ');
-    $('resultAddress').textContent=q.address;
-    $('resultJob').textContent=q.job;
-    $('rLabour').textContent=money(q.labour);
-    $('rMaterials').textContent=money(q.materials);
-    $('rEquipment').textContent=money(q.equipment);
-    $('rTravel').textContent=money(q.travel);
-    $('rOther').textContent=money(q.other);
-    $('rCost').textContent=money(q.cost);
-    $('rProfit').textContent=money(q.profit);
-    $('rGst').textContent=money(q.gst);
-    $('rTotal').textContent=money(q.total);
-    $('result').style.display='block';
-    updatePrintHeader();
-    return q;
-  }
-
-  function updatePrintHeader(){
-    const b=read(KEY_BUSINESS,{});
-    $('pBusinessName').textContent=b.name||'Your Business';
-    $('pBusinessDetails').textContent=[
-      b.abn?'ABN '+b.abn:'',
-      b.phone||'',b.email||'',b.address||''
-    ].filter(Boolean).join(' · ');
-    $('pQuoteNumber').textContent=$('quoteNumber').value;
-    $('pQuoteDate').textContent=$('quoteDate').value||today();
-    $('pTerms').textContent=$('terms').value.trim()||'No additional terms.';
-  }
-
-  function saveQuote(){
-    const q=calculate();
-    if(!q) return;
-    const quotes=read(KEY_QUOTES,[]);
-    const existingIndex=quotes.findIndex(x=>String(x.quoteNumber)===String(q.quoteNumber));
-    if(existingIndex>=0) quotes[existingIndex]=q; else quotes.push(q);
-    write(KEY_QUOTES,quotes.slice(-200));
-    $('saveMessage').textContent='Quote saved on this device.';
-    renderHistory();
-  }
-
-  function loadQuote(id){
-    const q=read(KEY_QUOTES,[]).find(x=>String(x.id)===String(id));
-    if(!q)return;
-    ['quoteNumber','quoteDate','customer','phone','email','address','job','terms','hours','rate','materials','equipment','travel','other','margin','gst']
-      .forEach(k=>{if($(k)) $(k).value=q[k]??''});
-    showTab('quoteTab');
-    calculate();
-    window.scrollTo({top:0,behavior:'smooth'});
-  }
-
-  function deleteQuote(id){
-    const quotes=read(KEY_QUOTES,[]).filter(x=>String(x.id)!==String(id));
-    write(KEY_QUOTES,quotes);renderHistory();
-  }
-
-  function setStatus(id,status){
-    const quotes=read(KEY_QUOTES,[]);
-    const q=quotes.find(x=>String(x.id)===String(id));
-    if(q){q.status=status;write(KEY_QUOTES,quotes);renderHistory()}
-  }
-
-  function renderHistory(){
-    const quotes=read(KEY_QUOTES,[]);
-    const box=$('history');box.innerHTML='';
-    $('historyEmpty').style.display=quotes.length?'none':'block';
-    $('clearHistory').style.display=quotes.length?'block':'none';
-    quotes.slice().reverse().forEach(q=>{
-      const item=document.createElement('div');
-      item.className='quote-item';
-      const status=String(q.status||'Draft').toLowerCase();
-      item.innerHTML=
-        '<strong>'+escapeHtml(q.customer)+'</strong>'+
-        '<div class="quote-meta">'+escapeHtml(q.quoteNumber||'')+' · '+escapeHtml(q.job)+' · '+escapeHtml(q.date)+'</div>'+
-        '<span class="badge status-'+escapeHtml(status)+'">'+escapeHtml(q.status||'Draft')+'</span>'+
-        '<div class="quote-total">'+money(q.total)+'</div>'+
-        '<div class="quote-meta">Estimated profit: '+money(q.profit)+'</div>'+
-        '<div class="quote-actions">'+
-          '<button type="button" class="secondary load-btn" data-id="'+q.id+'">LOAD</button>'+
-          '<button type="button" class="secondary status-btn" data-id="'+q.id+'">STATUS</button>'+
-          '<button type="button" class="danger delete-btn" data-id="'+q.id+'">DELETE</button>'+
-        '</div>';
-      box.appendChild(item);
-    });
-    const total=quotes.reduce((s,q)=>s+(Number(q.total)||0),0);
-    const won=quotes.filter(q=>q.status==='Accepted'||q.status==='Paid').reduce((s,q)=>s+(Number(q.total)||0),0);
-    const profit=quotes.filter(q=>q.status==='Accepted'||q.status==='Paid').reduce((s,q)=>s+(Number(q.profit)||0),0);
-    $('statQuotes').textContent=quotes.length;
-    $('statQuoted').textContent=money(total);
-    $('statWon').textContent=money(won);
-    $('statProfit').textContent=money(profit);
-  }
-
-  function changeStatus(id){
-    const q=read(KEY_QUOTES,[]).find(x=>String(x.id)===String(id));
-    if(!q)return;
-    const statuses=['Draft','Sent','Accepted','Declined','Paid'];
-    const current=Math.max(0,statuses.indexOf(q.status||'Draft'));
-    const next=statuses[(current+1)%statuses.length];
-    setStatus(id,next);
-  }
-
-  function clearForm(){
-    $('quoteNumber').value=nextQuoteNumber();
-    $('quoteDate').value=today();
-    ['customer','phone','email','address','job'].forEach(id=>$(id).value='');
-    ['hours','rate','materials','equipment','travel','other','margin','gst'].forEach(id=>{
-      const defaults={hours:8,rate:75,materials:350,equipment:100,travel:50,other:0,margin:20,gst:10};
-      $(id).value=defaults[id];
-    });
-    const b=read(KEY_BUSINESS,{});
-    $('terms').value=b.terms||'';
-    $('error').textContent='';$('saveMessage').textContent='';
-    $('result').style.display='none';
-  }
-
-  async function copySummary(){
-    const q=calculate();if(!q)return;
-    const text=[
-      'JOBMATE QUOTE',
-      'Quote #'+q.quoteNumber,
-      'Customer: '+q.customer,
-      'Job: '+q.job,
-      'Total: '+money(q.total),
-      'Estimated profit: '+money(q.profit)
-    ].join('\\n');
-    try{await navigator.clipboard.writeText(text);$('saveMessage').textContent='Quote summary copied.'}
-    catch(e){$('saveMessage').textContent='Copy is not available in this browser.'}
-  }
-
-  function showTab(id){
-    ['quoteTab','quotesTab','businessTab'].forEach(x=>$(x).classList.toggle('hidden',x!==id));
-    document.querySelectorAll('.tab').forEach(btn=>btn.classList.toggle('active',btn.dataset.tab===id));
-    if(id==='quotesTab')renderHistory();
-  }
-
-  document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>showTab(btn.dataset.tab)));
-  $('calculate').addEventListener('click',calculate);
-  $('saveQuote').addEventListener('click',saveQuote);
-  $('printQuote').addEventListener('click',()=>{if(calculate())setTimeout(()=>window.print(),120)});
-  $('newQuote').addEventListener('click',clearForm);
-  $('copySummary').addEventListener('click',copySummary);
-  $('saveBusiness').addEventListener('click',saveBusiness);
-  ['businessName','abn','businessPhone','businessEmail','businessAddress'].forEach(id=>$(id).addEventListener('input',updateProfilePreview));
-  $('clearHistory').addEventListener('click',()=>{if(confirm('Delete all saved quotes from this device?')){localStorage.removeItem(KEY_QUOTES);renderHistory()}});
-  $('history').addEventListener('click',e=>{
-    const id=e.target.getAttribute('data-id');if(!id)return;
-    if(e.target.classList.contains('load-btn'))loadQuote(id);
-    if(e.target.classList.contains('delete-btn'))deleteQuote(id);
-    if(e.target.classList.contains('status-btn'))changeStatus(id);
-  });
-
-  $('quoteDate').value=today();
-  $('quoteNumber').value=nextQuoteNumber();
-  loadBusiness();
-  const b=read(KEY_BUSINESS,{});
-  if(b.terms)$('terms').value=b.terms;
-  renderHistory();
+function renderCustomers(){
+ const cs=read(C,[]),box=$('customerList');box.innerHTML='';
+ if(!cs.length){box.innerHTML='<div class="empty">No customers yet. Add your first customer.</div>';return}
+ cs.forEach(c=>{
+  const d=document.createElement('div');d.className='item';
+  d.innerHTML='<strong>'+esc(c.name)+'</strong><div class="itemmeta">'+esc([c.phone,c.email,c.address].filter(Boolean).join(' · '))+'</div><div class="itemactions"><button class="secondary usec" data-id="'+c.id+'">NEW QUOTE</button><button class="secondary editc" data-id="'+c.id+'">EDIT</button></div>';
+  box.appendChild(d);
+ });
+}
+$('addCustomerBtn').onclick=()=>openCustomer();
+function openCustomer(c=null){
+ $('customerFormCard').classList.remove('hidden');$('customerFormTitle').textContent=c?'Edit customer':'Add customer';$('editCustomerId').value=c?.id||'';
+ $('cName').value=c?.name||'';$('cPhone').value=c?.phone||'';$('cEmail').value=c?.email||'';$('cAddress').value=c?.address||'';
+}
+$('cancelCustomer').onclick=()=>$('customerFormCard').classList.add('hidden');
+$('saveCustomer').onclick=()=>{
+ const name=$('cName').value.trim();if(!name){alert('Please enter a customer name.');return}
+ let cs=read(C,[]),id=$('editCustomerId').value||String(Date.now()),i=cs.findIndex(x=>String(x.id)===id);
+ const c={id,name,phone:$('cPhone').value.trim(),email:$('cEmail').value.trim(),address:$('cAddress').value.trim()};
+ if(i>=0)cs[i]=c;else cs.push(c);write(C,cs);$('customerFormCard').classList.add('hidden');renderCustomers();populateCustomerSelect();
+};
+$('customerList').onclick=e=>{
+ const id=e.target.dataset.id;if(!id)return;const c=read(C,[]).find(x=>String(x.id)===id);if(!c)return;
+ if(e.target.classList.contains('editc'))openCustomer(c);
+ if(e.target.classList.contains('usec')){blankQuote();$('customer').value=c.name;$('phone').value=c.phone;$('email').value=c.email;$('address').value=c.address;show('new')}
+};
+function populateCustomerSelect(){
+ const cs=read(C,[]),sel=$('customerSelect');sel.innerHTML='<option value="">New customer / choose later</option>';
+ cs.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.name;sel.appendChild(o)});
+}
+$('customerSelect').onchange=()=>{
+ const c=read(C,[]).find(x=>String(x.id)===$('customerSelect').value);if(!c)return;
+ $('customer').value=c.name;$('phone').value=c.phone;$('email').value=c.email;$('address').value=c.address;
+};
+function fillBusiness(){
+ const b=business();$('bName').value=b.name||'';$('bAbn').value=b.abn||'';$('bPhone').value=b.phone||'';$('bEmail').value=b.email||'';$('bAddress').value=b.address||'';$('bTerms').value=b.terms||'';
+}
+$('saveBusiness').onclick=()=>{
+ const b={name:$('bName').value.trim(),abn:$('bAbn').value.trim(),phone:$('bPhone').value.trim(),email:$('bEmail').value.trim(),address:$('bAddress').value.trim(),terms:$('bTerms').value.trim()};
+ write(B,b);$('businessMsg').textContent='Business profile saved on this device.';renderHome();
+};
+$('calculate').onclick=calc;$('saveQuote').onclick=saveQuote;$('newBlank').onclick=blankQuote;
+$('printQuote').onclick=()=>{
+ if(!calc())return;
+ const q=calc(),b=business(),w=window.open('','_blank');
+ if(!w){alert('Please allow pop-ups for JobMate to print a quote.');return}
+ w.document.write('<html><head><title>'+esc(q.number)+'</title><style>body{font-family:Arial;padding:35px;max-width:800px;margin:auto;color:#17181b}.line{display:flex;justify-content:space-between;border-bottom:1px solid #ddd;padding:9px 0}.total{font-size:34px;font-weight:900;margin:20px 0}small{color:#666}</style></head><body><h1>'+esc(b.name||'Your Business')+'</h1><small>'+esc([b.abn?'ABN '+b.abn:'',b.phone,b.email,b.address].filter(Boolean).join(' · '))+'</small><hr><h2>QUOTE '+esc(q.number)+'</h2><p><b>Customer:</b> '+esc(q.customer)+'<br><b>Job:</b> '+esc(q.job)+'<br><b>Address:</b> '+esc(q.address)+'</p><div class="line"><span>Job cost</span><b>'+money(q.cost)+'</b></div><div class="line"><span>Estimated profit</span><b>'+money(q.profit)+'</b></div><div class="line"><span>GST</span><b>'+money(q.gst)+'</b></div><div class="total">'+money(q.total)+'</div><h3>Terms / notes</h3><p style="white-space:pre-wrap">'+esc(q.terms||'')+'</p><small>Prepared with JobMate.</small></body></html>');
+ w.document.close();w.focus();setTimeout(()=>w.print(),300);
+};
+function onboard(){
+ if(localStorage.getItem(O)==='1')return;
+ $('onboarding').classList.remove('hidden');
+}
+$('finishOnboarding').onclick=()=>{
+ if(!$('oName').value.trim()){alert('Please enter your business name.');return}
+ if(!$('oDone').checked){alert('Please confirm the local-storage notice.');return}
+ write(B,{name:$('oName').value.trim(),abn:$('oAbn').value.trim(),phone:$('oPhone').value.trim(),email:$('oEmail').value.trim(),address:$('oAddress').value.trim(),terms:$('oTerms').value.trim()});
+ localStorage.setItem(O,'1');$('onboarding').classList.add('hidden');fillBusiness();blankQuote();renderHome();
+};
+$('upgradeBtn').onclick=()=>alert('Pro subscriptions will be connected after the cloud account system is added.');
+$('quoteDate').value=today();$('quoteNumber').value=nextNo();fillBusiness();populateCustomerSelect();renderHome();onboard();
 })();
 </script>
 </body>
