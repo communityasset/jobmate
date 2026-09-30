@@ -1,0 +1,10 @@
+{
+  "name":"JobMate",
+  "short_name":"JobMate",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#F7F8FA",
+  "theme_color":"#17181B",
+  "description":"Quote smarter. Know your profit.",
+  "icons":[{"src":"jobmate-icon-approved.png","sizes":"145x118","type":"image/png","purpose":"any"}]
+}
